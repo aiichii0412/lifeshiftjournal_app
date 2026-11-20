@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>28日間 市居愛と一緒に書くジャーナリング</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top">
+  <div class="inner">
+    <div class="kicker">LIFE SHIFT JOURNAL</div>
+    <h1>28日間、市居愛と<br>一緒に書くジャーナリング</h1>
+    <div class="sub">「設定」が変われば、人生が変わる</div>
+  </div>
+  <div class="arch"></div>
+</header>
+
+<main class="wrap">
+  <section class="today" id="today"></section>
+  <div id="list"></div>
+</main>
+
+<script src="data/days.js"></script>
+<script src="app.js"></script>
+<script>
+(function () {
+  var e = LSJ.esc, done = LSJ.doneSet(), cur = LSJ.todayNo();
+  var d = DAYS[cur - 1];
+  document.getElementById("today").innerHTML =
+    '<div class="lab">今日のページ</div>' +
+    '<div class="t">Day' + d.n + '　' + e(d.title) + '</div>' +
+    '<a class="btn" href="day.html?d=' + d.n + '">今日のページを開く</a>';
+
+  var html = "", w = 0;
+  DAYS.forEach(function (x) {
+    if (x.week !== w) {
+      w = x.week;
+      html += '<div class="week">WEEK ' + w + '　' + e(WEEKS[w]) + '</div><div class="list">';
+    }
+    html += '<a class="item' + (done[x.n] ? " done" : "") + (x.n === cur ? " cur" : "") +
+      '" href="day.html?d=' + x.n + '"><span class="no">Day' + x.n + '</span>' +
+      '<span class="tt">' + e(x.title) + '</span>' +
+      '<span class="ck">' + (done[x.n] ? "✓" : "") + '</span></a>';
+    if (x.n % 7 === 0) html += "</div>";
+  });
+  document.getElementById("list").innerHTML = html;
+})();
+</script>
+</body>
+</html>
